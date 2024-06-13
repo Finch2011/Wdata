@@ -1,37 +1,41 @@
 import { data } from "autoprefixer";
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 function Master({}) {
     const [Dataweather , setDataweather] = useState();
-    const handlesearch = () =>
-    fetch(`https://api.openweathermap.org/data/2.5/weather?Tehran&appid=d7bbe6d6df861ce08c8853f34f7829b2&q=tehran&units=metric`)
+    const i = useRef()
+    console.log(i)
+    useEffect(()=>{
+        fetch(`https://api.openweathermap.org/data/2.5/weather?Tehran&appid=6c65d2c064fe3cdc12b62c5b8787b0a9&q=takab&units=metric`)
             .then(res=>res.json())
             .then(json=>setDataweather(json))
-            let fixer = "c"
-            const handlesearch2 = () =>
-            fetch('https://api.openweathermap.org/data/2.5/weather?Tehran&appid=d7bbe6d6df861ce08c8853f34f7829b2&q=tehran&units=imperial')
-                    .then(res=>res.json())
-                    .then(json=>setDataweather(json))
-                   
+    })
+    if(!Dataweather){
+        return null
+    }
+    
     return (
-        <div className="flex items-center justify-center mt-5">
-         <div className=" w-[400px] h-64 rounded-2xl flex items-start justify-between bg-blue-500 p-10">
-            <div className="flex flex-col justify-center mt-4 gap-y-5">
-                <div>
-                <h1 className="text-4xl text-white">{Dataweather && Dataweather.name}</h1>
-                <p className="text-gray-400 text-xl ml-1.5">IR</p>
-                </div>
-                <div className="flex gap-x-5 ">
-                <button className="border border-[1.5px] border-white rounded-md p-1.5 text-white text-sm hover:text-white hover:bg-blue-700 transition-colors hover:border-none"onClick={handlesearch2} >Fahrenheit</button>
-                <button className="border border-[1.5px] border-white rounded-md p-1.5 text-white text-sm hover:text-white hover:bg-blue-700 hover:border-none " onClick={handlesearch}>Celsius</button>
+        <div className="flex items-center flex-col gap-y-5  justify-center mt-10 ">
+            <div className="flex justify-center items-center">
+            <input ref={i} className="p-1 outline-none rounded-sm" type="search" placeholder="searching city ..." />
+            <button className="border-[1.5px] border-blue-600 rounded-md p-2 text-white hover:bg-blue-600 ">Search</button>
+            </div>
+         <div className=" w-max h-max flex-col rounded-2xl flex items-center justify-center bg-blue-500 p-20">
+            <div className="flex flex-col justify-center  gap-y-5">
+                <div className="flex flex-col justify-center items-center gap-y-3">
+                <h1 className="text-4xl text-white">{Dataweather.name}</h1>
+                <p className="text-yellow-100 font-bold text-xl ml-1.5">{Dataweather.sys.country}</p>
                 </div>
                 <div>
                 </div>
             </div>
-            <div className="flex flex-col justify-center">
-                <img src="./public/sun.png" alt="" />
-                <h2 className="ml-4 text-3xl text-white">{Dataweather && Math.round(Dataweather.main.temp)}</h2>
+            <div className="flex flex-col justify-center items-center gap-y-3">
+                <img className="w-[100px]" src="./public/sun.png" alt="" />
+                <h2 className="ml-4 text-xl text-white">Temperature : { Math.round(Dataweather.main.temp)} <span className="text-[19px]">°C</span></h2>
+                <h2 className="ml-4 text-lg text-white">Wind speed : { Math.round(Dataweather.wind.speed)} <span className="text-[19px]">Km/h</span></h2>
+                <h2 className="ml-4 text-lg text-white">wind direction : { Math.round(Dataweather.wind.deg)} <span className="text-[19px]">°E</span></h2>
             </div>
+            
             
          </div>
         </div>
