@@ -12,14 +12,14 @@ function Master({}) {
             fetch('https://api.openweathermap.org/data/2.5/weather?Tehran&appid=d7bbe6d6df861ce08c8853f34f7829b2&q=tehran&units=imperial')
                     .then(res=>res.json())
                     .then(json=>setDataweather(json))
-                   
+                
     return (
         <div className="flex items-center justify-center mt-5">
          <div className=" w-[400px] h-64 rounded-2xl flex items-start justify-between bg-blue-500 p-10">
             <div className="flex flex-col justify-center mt-4 gap-y-5">
                 <div>
-                <h1 className="text-4xl text-white">{Dataweather && Dataweather.name}</h1>
-                <p className="text-gray-400 text-xl ml-1.5">IR</p>
+                <h1 className="text-4xl text-white">Tehran</h1>
+                <p className="text-blue-950 font-bold text-xl ml-1.5">IR</p>
                 </div>
                 <div className="flex gap-x-5 ">
                 <button className="border border-[1.5px] border-white rounded-md p-1.5 text-white text-sm hover:text-white hover:bg-blue-700 transition-colors hover:border-none"onClick={handlesearch2} >Fahrenheit</button>
