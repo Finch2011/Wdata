@@ -1,40 +1,45 @@
-import { data } from "autoprefixer";
-import { useState } from "react"
+import { useEffect, useState , useRef } from "react"
+import { IoAddSharp } from "react-icons/io5";
+import { IoIosSettings } from "react-icons/io";
+
 
 function Master({}) {
     const [Dataweather , setDataweather] = useState();
-    const handlesearch = () =>
-    fetch(`https://api.openweathermap.org/data/2.5/weather?Tehran&appid=d7bbe6d6df861ce08c8853f34f7829b2&q=tehran&units=metric`)
-            .then(res=>res.json())
-            .then(json=>setDataweather(json))
-            let fixer = "c"
-            const handlesearch2 = () =>
-            fetch('https://api.openweathermap.org/data/2.5/weather?Tehran&appid=d7bbe6d6df861ce08c8853f34f7829b2&q=tehran&units=imperial')
-                    .then(res=>res.json())
-                    .then(json=>setDataweather(json))
+    // useEffect(()=>{
+       
+    // });
+    const InputTag = useRef()
+    const show = () => {
+         
+        fetch(`https://api.openweathermap.org/data/2.5/weather?Tehran&appid=d7bbe6d6df861ce08c8853f34f7829b2&q=${InputTag.current.value}&units=metric`)
+                .then(res=>res.json())
+                .then(json=>setDataweather(json))
+                
+    }
+    const search = () =>{
+        
+    }
+        
                 
     return (
-        <div className="flex items-center justify-center mt-5">
-         <div className=" w-[400px] h-64 rounded-2xl flex items-start justify-between bg-blue-500 p-10">
-            <div className="flex flex-col justify-center mt-4 gap-y-5">
-                <div>
-                <h1 className="text-4xl text-white">Tehran</h1>
-                <p className="text-blue-950 font-bold text-xl ml-1.5">IR</p>
+        <div className="container mx-auto mt-3">
+            <div className="flex items-center gap-x-[450px]">
+                <div className="w-[250px]">
+            <input className="w-[60%] h-10 rounded-lg outline-blue-800 pl-2 pr-2 outline-2" ref={InputTag} type="search" /> <button className="border-blue-600 border-[1.5px] p-2 rounded-lg text-white" onClick={show}>add</button>
                 </div>
-                <div className="flex gap-x-5 ">
-                <button className="border border-[1.5px] border-white rounded-md p-1.5 text-white text-sm hover:text-white hover:bg-blue-700 transition-colors hover:border-none"onClick={handlesearch2} >Fahrenheit</button>
-                <button className="border border-[1.5px] border-white rounded-md p-1.5 text-white text-sm hover:text-white hover:bg-blue-700 hover:border-none " onClick={handlesearch}>Celsius</button>
-                </div>
-                <div>
-                </div>
+            <h1 className="text-white text-[30px]">{Dataweather && Dataweather.name} <span className="text-[20px] text-blue-500">{Dataweather && Dataweather.sys.country}</span></h1>
+            <IoIosSettings className="text-[32px] text-white"/>
             </div>
-            <div className="flex flex-col justify-center">
-                <img src="./public/sun.png" alt="" />
-                <h2 className="ml-4 text-3xl text-white">{Dataweather && Math.round(Dataweather.main.temp)}</h2>
-            </div>
-            
-         </div>
+             <div className="mt-56">
+                <h1 className="ml-40 relative text-[140px] text-center text-white">{Dataweather && Math.round( Dataweather.main.temp)}  <span className="absolute top-5 font-bold text-4xl left-[662px]">°C</span></h1>
+                <div className="flex justify-center ml-40 ms-center gap-x-2">
+                    <h1 className="text-[20px] text-center text-white">Wind Speed : </h1>
+                    <div className="bg-blue-400 rounded-lg w-max px-1 py-0.5 h-max text-[20px] text-center text-white">{Dataweather && Math.round( Dataweather.wind.speed)} <span className="text-[12px]">Km/h</span></div>
+                </div>
+                
+             </div>
         </div>
+
 
     )
 }
