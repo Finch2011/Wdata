@@ -16,9 +16,7 @@ function Master({}) {
                 .then(json=>setDataweather(json))
                 
     }
-    const search = () =>{
-        
-    }
+    
         
                 
     return (
